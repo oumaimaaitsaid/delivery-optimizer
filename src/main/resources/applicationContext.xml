@@ -1,13 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans
-           https://www.springframework.org/schema/beans/spring-beans.xsd">
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/data/jpa
+           https://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- ======================= -->
+    <!-- CONFIGURATION DATA SOURCE -->
+    <!-- ======================= -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:deliveriesdb"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- ======================= -->
+    <!-- CONFIGURATION JPA -->
+    <!-- ======================= -->
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- Ton package où se trouvent les @Entity -->
+        <property name="packagesToScan" value="com.delivery.model"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- ======================= -->
+    <!-- ACTIVATION DES REPOSITORIES -->
+    <!-- ======================= -->
+    <jpa:repositories base-package="com.delivery.repository"/>
+
+    <!-- ======================= -->
+    <!-- OPTIMISATION BEANS -->
+    <!-- ======================= -->
     <bean id="nearestNeighborOptimizer" class="com.delivery.optimizer.NearestNeighborOptimizer"/>
     <bean id="clarkeWrightOptimizer" class="com.delivery.optimizer.ClarkeWrightOptimizer"/>
 
+    <!-- ======================= -->
+    <!-- SERVICES -->
+    <!-- ======================= -->
     <bean id="tourService" class="com.delivery.service.TourService">
+        <!-- Tu peux injecter l’un ou l’autre optimiseur -->
         <constructor-arg ref="clarkeWrightOptimizer"/>
     </bean>
+
 </beans>
