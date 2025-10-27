@@ -29,6 +29,11 @@ public class VehicleController {
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
     }
 
+    //  Créer un nouveau véhicule
+    @PostMapping
+    public Vehicle create(@RequestBody Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
+    }
 
 
 
