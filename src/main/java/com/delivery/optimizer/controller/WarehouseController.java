@@ -15,6 +15,12 @@ public class WarehouseController {
         this.warehouseRepository = warehouseRepository;
     }
 
+    //Get Recupérer tous les entrepôts
+    @GetMapping
+    public List<Warehouse> getAll(){
+        return warehouseRepository.findAll();
+    }
+
 
 
 
