@@ -27,6 +27,12 @@ public class WarehouseController {
         return warehouseRepository.findById(id).orElseThrow(()->new RuntimeException("Warehouse with id:"+id+" not found"));
     }
 
+    //Post Ajouter un nouvel entrepôt
+
+    @PostMapping
+    public Warehouse create(@RequestBody Warehouse warehouse){
+        return warehouseRepository.save(warehouse);
+    }
 
 
 
