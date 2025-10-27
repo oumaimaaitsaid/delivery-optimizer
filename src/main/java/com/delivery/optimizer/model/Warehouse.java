@@ -1,5 +1,5 @@
 package com.delivery.optimizer.model;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 
