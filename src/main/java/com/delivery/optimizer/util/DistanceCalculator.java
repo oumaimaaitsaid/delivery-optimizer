@@ -1,5 +1,8 @@
 package com.delivery.optimizer.util;
 
+import com.delivery.optimizer.model.Delivery;
+import com.delivery.optimizer.model.Warehouse;
+
 public class DistanceCalculator {
     public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371;
@@ -13,4 +16,15 @@ public class DistanceCalculator {
     }
 
 
+    // ✅ 2. Distance entre entrepôt et livraison
+    public double calculateDistance(Warehouse w, Delivery d) {
+        return calculateDistance(w.getLatitude(), w.getLongitude(),
+                d.getLatitude(), d.getLongitude());
+    }
+
+    // ✅ 3. Distance entre deux livraisons
+    public double calculateDistance(Delivery d1, Delivery d2) {
+        return calculateDistance(d1.getLatitude(), d1.getLongitude(),
+                d2.getLatitude(), d2.getLongitude());
+    }
 }
