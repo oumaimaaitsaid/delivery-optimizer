@@ -16,6 +16,12 @@ public class VehicleController {
         this.vehicleRepository = vehicleRepository;
     }
 
+    // Récupérer tous les véhicules
+    @GetMapping
+    public List<Vehicle> getAll() {
+        return vehicleRepository.findAll();
+    }
+
 
 
 
