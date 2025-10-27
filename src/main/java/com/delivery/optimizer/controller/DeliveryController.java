@@ -14,7 +14,10 @@ public class DeliveryController {
         this.deliveryRepository = deliveryRepository;
     }
 
-
+    @GetMapping
+    public List<Delivery> getAll() {
+        return deliveryRepository.findAll();
+    }
 
 
 
