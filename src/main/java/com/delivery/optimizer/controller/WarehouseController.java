@@ -34,6 +34,20 @@ public class WarehouseController {
         return warehouseRepository.save(warehouse);
     }
 
+    //PUT modifier un entrepôt
 
+    @PutMapping("/{id}")
+
+    public Warehouse update(@PathVariable Long id,@RequestBody Warehouse updatedWarehouse){
+        Warehouse warehouse =warehouseRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("Warehouse with id:"+id+" not found"));
+        warehouse.setName(updatedWarehouse.getName());
+        warehouse.setLatitude(updatedWarehouse.getLatitude());
+        warehouse.setLongitude(updatedWarehouse.getLongitude());
+        warehouse.setOpeningHours(updatedWarehouse.getOpeningHours());
+
+        return warehouseRepository.save(warehouse);
+
+    }
 
 }
