@@ -30,6 +30,19 @@ public class TourController {
     public Tour createTour(@RequestBody Tour tour){
         return tourRepository.save(tour);
     }
+    // Mettre à jour une tournée
+    @PutMapping("/{id}")
+    public Tour update(@PathVariable Long id, @RequestBody Tour updatedTour) {
+        Tour tour = tourRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tour not found"));
+
+        tour.setDate(updatedTour.getDate());
+        tour.setVehicle(updatedTour.getVehicle());
+        tour.setWarehouse(updatedTour.getWarehouse());
+        tour.setDeliveries(updatedTour.getDeliveries());
+
+        return tourRepository.save(tour);
+    }
 
 
 }
