@@ -21,7 +21,11 @@ public class WarehouseController {
         return warehouseRepository.findAll();
     }
 
-
+    //Get Recupérer les entreôts par ID
+    @GetMapping("/{id}")
+    public Warehouse getById(@PathVariable Long id){
+        return warehouseRepository.findById(id).orElseThrow(()->new RuntimeException("Warehouse with id:"+id+" not found"));
+    }
 
 
 
