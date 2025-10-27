@@ -25,7 +25,11 @@ public class TourController {
         return tourRepository.findById(id).orElseThrow(()->new RuntimeException("Tour not found"));
     }
 
-
+    //crée une nouvelle tourné
+    @PostMapping
+    public Tour createTour(@RequestBody Tour tour){
+        return tourRepository.save(tour);
+    }
 
 
 }
