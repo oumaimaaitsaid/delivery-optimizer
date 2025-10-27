@@ -35,6 +35,19 @@ public class VehicleController {
         return vehicleRepository.save(vehicle);
     }
 
+    // update un véhicule
+    @PutMapping("/{id}")
+    public Vehicle update(@PathVariable Long id, @RequestBody Vehicle updatedVehicle) {
+        Vehicle vehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+
+        vehicle.setType(updatedVehicle.getType());
+        vehicle.setMaxWeight(updatedVehicle.getMaxWeight());
+        vehicle.setMaxVolume(updatedVehicle.getMaxVolume());
+        vehicle.setMaxDeliveries(updatedVehicle.getMaxDeliveries());
+
+        return vehicleRepository.save(vehicle);
+    }
 
 
 }
