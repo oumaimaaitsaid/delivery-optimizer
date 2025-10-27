@@ -19,6 +19,10 @@ public class DeliveryController {
         return deliveryRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Delivery getById(@PathVariable Long id) {
+        return deliveryRepository.findById(id).orElseThrow(()->new RuntimeException("delivery not found"));
+    }
 
 
 
