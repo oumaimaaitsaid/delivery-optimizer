@@ -49,5 +49,9 @@ public class WarehouseController {
         return warehouseRepository.save(warehouse);
 
     }
-
+    //Supprimer un entrepôt
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        warehouseRepository.deleteById(id);
+    }
 }
