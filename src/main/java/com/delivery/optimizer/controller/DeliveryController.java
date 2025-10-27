@@ -29,6 +29,15 @@ public class DeliveryController {
         return  deliveryRepository.save(delivery);
     }
 
-
+    @PutMapping("/{id}")
+    public  Delivery update(@PathVariable Long id, @RequestBody Delivery updated) {
+        Delivery d = deliveryRepository.findById(id).orElseThrow(()-> new RuntimeException("delivery not found"));
+        d.setLatitude(updated.getLatitude());
+        d.setLongitude(updated.getLongitude());
+        d.setWeight(updated.getWeight());
+        d.setVolume(updated.getVolume());
+        d.setStatus(updated.getStatus());
+        return  deliveryRepository.save(d);
+    }
 
 }
