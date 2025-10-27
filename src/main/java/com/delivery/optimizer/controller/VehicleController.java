@@ -22,6 +22,12 @@ public class VehicleController {
         return vehicleRepository.findAll();
     }
 
+    // Récupérer un véhicule par ID
+    @GetMapping("/{id}")
+    public Vehicle getById(@PathVariable Long id) {
+        return vehicleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+    }
 
 
 
