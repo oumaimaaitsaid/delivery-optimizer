@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Warehouse {
+
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private Long id;
