@@ -24,7 +24,10 @@ public class DeliveryController {
         return deliveryRepository.findById(id).orElseThrow(()->new RuntimeException("delivery not found"));
     }
 
-
+    @PostMapping
+    public Delivery create(@RequestBody Delivery delivery) {
+        return  deliveryRepository.save(delivery);
+    }
 
 
 
