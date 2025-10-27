@@ -49,5 +49,9 @@ public class VehicleController {
         return vehicleRepository.save(vehicle);
     }
 
-
+    //Supprimer un véhicule
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        vehicleRepository.deleteById(id);
+    }
 }
