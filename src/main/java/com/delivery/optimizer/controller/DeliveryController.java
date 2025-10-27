@@ -39,5 +39,8 @@ public class DeliveryController {
         d.setStatus(updated.getStatus());
         return  deliveryRepository.save(d);
     }
-
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        deliveryRepository.deleteById(id);
+    }
 }
