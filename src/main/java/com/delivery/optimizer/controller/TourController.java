@@ -18,6 +18,13 @@ public class TourController {
         return tourRepository.findAll();
     }
 
+    //Récuperer une tournée by Id
+
+    @GetMapping("/{id}")
+    public Tour getTourById(@PathVariable Long id){
+        return tourRepository.findById(id).orElseThrow(()->new RuntimeException("Tour not found"));
+    }
+
 
 
 
