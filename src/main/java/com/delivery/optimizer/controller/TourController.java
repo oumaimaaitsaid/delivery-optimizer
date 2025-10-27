@@ -12,7 +12,11 @@ public class TourController {
     public TourController(TourRepository tourRepository) {
         this.tourRepository = tourRepository;
     }
-
+    //Récupérer toutes les tournés
+    @GetMapping
+    public List<Tour> getTours(){
+        return tourRepository.findAll();
+    }
 
 
 
