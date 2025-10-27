@@ -44,5 +44,9 @@ public class TourController {
         return tourRepository.save(tour);
     }
 
-
+    //DELETE — Supprimer une tournée
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        tourRepository.deleteById(id);
+    }
 }
