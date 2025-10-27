@@ -41,20 +41,20 @@
     <!-- ======================= -->
     <!-- ACTIVATION DES REPOSITORIES -->
     <!-- ======================= -->
-    <jpa:repositories base-package="com.delivery.repository"/>
+    <jpa:repositories base-package="com.delivery.optimizer.repository"/>
 
     <!-- ======================= -->
     <!-- OPTIMISATION BEANS -->
     <!-- ======================= -->
-    <bean id="nearestNeighborOptimizer" class="com.delivery.optimizer.NearestNeighborOptimizer"/>
-    <bean id="clarkeWrightOptimizer" class="com.delivery.optimizer.ClarkeWrightOptimizer"/>
+    <bean id="nearestNeighborOptimizer" class="com.delivery.optimizer.optimizer.NearestNeighborOptimizer"/>
+    <bean id="clarkeWrightOptimizer" class="com.delivery.optimizer.optimizer.ClarkeWrightOptimizer"/>
 
     <!-- ======================= -->
     <!-- SERVICES -->
     <!-- ======================= -->
     <bean id="tourService" class="com.delivery.service.TourService">
         <!-- Tu peux injecter l’un ou l’autre optimiseur -->
-        <constructor-arg ref="clarkeWrightOptimizer"/>
+        <constructor-arg ref="nearestNeighborOptimizer"/>
     </bean>
 
 </beans>

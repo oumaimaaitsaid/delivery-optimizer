@@ -15,16 +15,24 @@ public class NearestNeighborOptimizer implements TourOptimizer{
         double currentLon = warehouse.getLongitude();
 
         while (!remaining.isEmpty()) {
-            Delivery nearest = remaining.stream()
-                    .min(Comparator.comparingDouble(d -> distance(currentLat, currentLon, d.getLatitude(), d.getLongitude())))
-                    .orElseThrow();
+            Delivery nearest=null;
+            double minDistance =Double.MAX_VALUE;
+
+            for(Delivery d : remaining){
+                double distance =distance(currentLat,currentLon,d.getLatitude(),d.getLongitude());
+                if(distance<minDistance){
+
+                    minDistance=distance;
+                    nearest=d;
+                }
+            }
             result.add(nearest);
-            currentLat = nearest.getLatitude();
-            currentLon = nearest.getLongitude();
+            currentLon=nearest.getLongitude();
+            currentLat=nearest.getLatitude();
             remaining.remove(nearest);
         }
+return result;
 
-        return result;
     }
     private double distance(double lat1, double long1, double lat2,double long2) {
         double R =6371;
