@@ -1,5 +1,7 @@
 package com.delivery.optimizer.dto;
 
+import com.delivery.optimizer.model.VehicleType;
+
 public class VehicleDTO {
     private Long id;
     private String type;
@@ -11,7 +13,7 @@ public class VehicleDTO {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getType() { return type; }
+    public VehicleType getType() { return type; }
     public void setType(String type) { this.type = type; }
 
     public double getMaxWeight() { return maxWeight; }
