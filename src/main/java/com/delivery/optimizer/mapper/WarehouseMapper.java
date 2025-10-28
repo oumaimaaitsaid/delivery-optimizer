@@ -16,5 +16,13 @@ public class WarehouseMapper {
 
 
     }
-
+    public static Warehouse toEntity(WarehouseDTO dto){
+        Warehouse warehouse = new Warehouse();
+        warehouse.setId(dto.getId());
+        warehouse.setName(dto.getName());
+        warehouse.setLatitude(dto.getLatitude());
+        warehouse.setLongitude(dto.getLongitude());
+        warehouse.setOpeningHours(dto.getOpeningHours());
+        return warehouse;
+    }
 }
