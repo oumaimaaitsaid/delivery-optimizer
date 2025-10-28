@@ -5,6 +5,14 @@ import com.delivery.optimizer.model.Vehicle;
 
 public class VehicleMapper {
 
-
+    public static VehicleDTO toDTO(Vehicle vehicle){
+        VehicleDTO dto=new VehicleDTO();
+        dto.setId(vehicle.getId());
+        dto.setType(String.valueOf(vehicle.getType()));
+        dto.setMaxWeight(vehicle.getMaxWeight());
+        dto.setMaxVolume(vehicle.getMaxVolume());
+        dto.setMaxDeliveries(vehicle.getMaxDeliveries());
+        return dto;
+    }
 
 }
