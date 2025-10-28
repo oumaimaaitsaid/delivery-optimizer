@@ -5,7 +5,8 @@ import com.delivery.optimizer.repository.TourRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
+@RequestMapping("/tours")
 public class TourController {
 
     private final TourRepository tourRepository;
