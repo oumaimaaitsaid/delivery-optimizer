@@ -19,7 +19,7 @@ public class DeliveryMapper {
         return dto;
 
     }
-    public static Delivery toEntity(DeliveryDTO dto, Tour tour) {
+    public static Delivery toEntity(DeliveryDTO dto) {
         Delivery delivery = new Delivery();
         delivery.setId(dto.getId());
         delivery.setLatitude(dto.getLatitude());
@@ -28,7 +28,7 @@ public class DeliveryMapper {
         delivery.setVolume(dto.getVolume());
         delivery.setTimeWindow(dto.getTimeWindow());
         delivery.setStatus(dto.getStatus());
-        delivery.setTour(tour);
+
         return delivery;
     }
 

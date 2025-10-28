@@ -20,6 +20,8 @@ public class Delivery {
     private double weight;
     private double volume;
     private String timeWindow;
+    private String address;
+    private String preferredTimeSlot;
 
     @Enumerated(EnumType.STRING)
     private  DeliveryStatus status;

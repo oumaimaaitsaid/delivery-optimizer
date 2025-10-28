@@ -2,6 +2,8 @@ package com.delivery.optimizer.util;
 
 import com.delivery.optimizer.model.Delivery;
 import com.delivery.optimizer.model.Warehouse;
+import org.springframework.stereotype.Component;
+
 
 public class DistanceCalculator {
     public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {

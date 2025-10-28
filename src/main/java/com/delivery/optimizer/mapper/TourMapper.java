@@ -26,13 +26,11 @@ public class TourMapper {
         );
         return dto;
     }
-    public static Tour toEntity(TourDTO dto, Vehicle vehicle, Warehouse warehouse, List<Delivery> deliveries) {
+    public static Tour toEntity(TourDTO dto ) {
         Tour tour = new Tour();
         tour.setId(dto.getId());
         tour.setDate(dto.getDate());
-        tour.setVehicle(vehicle);
-        tour.setWarehouse(warehouse);
-        tour.setDeliveries(deliveries);
+
         return tour;
     }
 

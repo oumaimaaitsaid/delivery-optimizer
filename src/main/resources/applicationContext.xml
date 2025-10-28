@@ -11,9 +11,6 @@
            http://www.springframework.org/schema/context
            https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- ======================= -->
-    <!-- CONFIGURATION DATA SOURCE -->
-    <!-- ======================= -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.h2.Driver"/>
         <property name="url" value="jdbc:h2:mem:deliveriesdb"/>
@@ -21,14 +18,10 @@
         <property name="password" value=""/>
     </bean>
 
-    <!-- ======================= -->
-    <!-- CONFIGURATION JPA -->
-    <!-- ======================= -->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!-- Ton package où se trouvent les @Entity -->
-        <property name="packagesToScan" value="com.delivery.model"/>
+        <property name="packagesToScan" value="com.delivery.optimizer.model"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
@@ -38,23 +31,28 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <!-- ======================= -->
-    <!-- ACTIVATION DES REPOSITORIES -->
-    <!-- ======================= -->
     <jpa:repositories base-package="com.delivery.optimizer.repository"/>
 
-    <!-- ======================= -->
-    <!-- OPTIMISATION BEANS -->
-    <!-- ======================= -->
     <bean id="nearestNeighborOptimizer" class="com.delivery.optimizer.optimizer.NearestNeighborOptimizer"/>
-    <bean id="clarkeWrightOptimizer" class="com.delivery.optimizer.optimizer.ClarkeWrightOptimizer"/>
 
-    <!-- ======================= -->
-    <!-- SERVICES -->
-    <!-- ======================= -->
-    <bean id="tourService" class="com.delivery.service.TourService">
-        <!-- Tu peux injecter l’un ou l’autre optimiseur -->
-        <constructor-arg ref="nearestNeighborOptimizer"/>
+
+    <bean id="distanceCalculator" class="com.delivery.optimizer.util.DistanceCalculator"/>
+
+    <bean id="tourService" class="com.delivery.optimizer.service.TourService">
+        <constructor-arg name="optimizer" ref="nearestNeighborOptimizer"/>
+        <constructor-arg name="distanceCalculator" ref="distanceCalculator"/>
+    </bean>
+
+    <bean id="tourController" class="com.delivery.optimizer.controller.TourController">
+        <constructor-arg ref="tourRepository"/>
+        <constructor-arg ref="vehicleRepository"/>
+        <constructor-arg ref="warehouseRepository"/>
+        <constructor-arg ref="tourService"/>
+    </bean>
+
+    <bean id="deliveryController" class="com.delivery.optimizer.controller.DeliveryController">
+        <constructor-arg ref="deliveryRepository"/>
+        <constructor-arg ref="tourRepository"/>
     </bean>
 
 </beans>

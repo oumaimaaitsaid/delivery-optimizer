@@ -1,45 +1,76 @@
 package com.delivery.optimizer.controller;
 
+import com.delivery.optimizer.dto.DeliveryDTO;
+import com.delivery.optimizer.mapper.DeliveryMapper;
 import com.delivery.optimizer.model.Delivery;
 import com.delivery.optimizer.repository.DeliveryRepository;
+import com.delivery.optimizer.repository.TourRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RestController
+
 @RequestMapping("/api/deliveries")
 public class DeliveryController {
     private final DeliveryRepository deliveryRepository;
+    private final TourRepository tourRepository;
 
-    public DeliveryController(DeliveryRepository deliveryRepository)
+    public DeliveryController(DeliveryRepository deliveryRepository , TourRepository tourRepository)
     {
-        this.deliveryRepository = deliveryRepository;
+        this.deliveryRepository=deliveryRepository;
+        this.tourRepository = tourRepository;
     }
 
     @GetMapping
-    public List<Delivery> getAll() {
-        return deliveryRepository.findAll();
+    public List<DeliveryDTO> getAll() {
+        return deliveryRepository.findAll()
+                .stream()
+                .map(DeliveryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Delivery getById(@PathVariable Long id) {
-        return deliveryRepository.findById(id).orElseThrow(()->new RuntimeException("delivery not found"));
+    public DeliveryDTO getById(@PathVariable Long id) {
+       Delivery delivery= deliveryRepository.findById(id).orElseThrow(()->new RuntimeException("delivery not found"));
+       return DeliveryMapper.toDTO(delivery);
     }
 
     @PostMapping
-    public Delivery create(@RequestBody Delivery delivery) {
-        return  deliveryRepository.save(delivery);
+    public DeliveryDTO create(@RequestBody DeliveryDTO dto) {
+
+        Delivery delivery = DeliveryMapper.toEntity(dto);
+
+        if (dto.getTourId() != null) {
+            delivery.setTour(tourRepository.findById(dto.getTourId())
+                    .orElseThrow(() -> new RuntimeException("Tour not found")));
+        }
+
+        Delivery saved = deliveryRepository.save(delivery);
+        return DeliveryMapper.toDTO(saved);
     }
 
+
     @PutMapping("/{id}")
-    public  Delivery update(@PathVariable Long id, @RequestBody Delivery updated) {
-        Delivery d = deliveryRepository.findById(id).orElseThrow(()-> new RuntimeException("delivery not found"));
-        d.setLatitude(updated.getLatitude());
-        d.setLongitude(updated.getLongitude());
-        d.setWeight(updated.getWeight());
-        d.setVolume(updated.getVolume());
-        d.setStatus(updated.getStatus());
-        return  deliveryRepository.save(d);
+    public DeliveryDTO update(@PathVariable Long id, @RequestBody DeliveryDTO dto) {
+        Delivery delivery = deliveryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Delivery not found"));
+
+        delivery.setAddress(dto.getAddress());
+        delivery.setLatitude(dto.getLatitude());
+        delivery.setLongitude(dto.getLongitude());
+        delivery.setWeight(dto.getWeight());
+        delivery.setVolume(dto.getVolume());
+        delivery.setStatus(dto.getStatus());
+        delivery.setPreferredTimeSlot(dto.getPreferredTimeSlot());
+
+        if (dto.getTourId() != null) {
+            delivery.setTour(tourRepository.findById(dto.getTourId())
+                    .orElseThrow(() -> new RuntimeException("Tour not found")));
+        }
+
+        Delivery updated = deliveryRepository.save(delivery);
+        return DeliveryMapper.toDTO(updated);
     }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {

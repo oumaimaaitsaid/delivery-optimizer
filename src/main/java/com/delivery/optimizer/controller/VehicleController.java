@@ -3,13 +3,14 @@ package com.delivery.optimizer.controller;
 import com.delivery.optimizer.dto.VehicleDTO;
 import com.delivery.optimizer.mapper.VehicleMapper;
 import com.delivery.optimizer.model.Vehicle;
+import com.delivery.optimizer.model.VehicleType;
 import com.delivery.optimizer.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+
 @RequestMapping("/vehicles")
 public class VehicleController {
 
@@ -50,7 +51,7 @@ public class VehicleController {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
-        vehicle.setType(dto.getType());
+        vehicle.setType(VehicleType.valueOf(dto.getType().toUpperCase()));
         vehicle.setMaxWeight(dto.getMaxWeight());
         vehicle.setMaxVolume(dto.getMaxVolume());
         vehicle.setMaxDeliveries(dto.getMaxDeliveries());

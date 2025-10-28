@@ -10,6 +10,8 @@ public class DeliveryDTO {
     private double volume;
     private String timeWindow;
     private DeliveryStatus status;
+    private String address;
+    private String preferredTimeSlot;
     private Long tourId;
 //getters & Setters
     public Long getId() { return id; }
@@ -32,6 +34,12 @@ public class DeliveryDTO {
 
     public DeliveryStatus getStatus() { return status; }
     public void setStatus(DeliveryStatus status) { this.status = status; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getPreferredTimeSlot() { return preferredTimeSlot; }
+    public void setPreferredTimeSlot(String preferredTimeSlot) { this.preferredTimeSlot = preferredTimeSlot; }
 
     public Long getTourId() { return tourId; }
     public void setTourId(Long tourId) { this.tourId = tourId; }
