@@ -14,5 +14,13 @@ public class VehicleMapper {
         dto.setMaxDeliveries(vehicle.getMaxDeliveries());
         return dto;
     }
-
+    public static Vehicle toEntity(VehicleDTO dto) {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(dto.getId());
+        vehicle.setType(dto.getType());
+        vehicle.setMaxWeight(dto.getMaxWeight());
+        vehicle.setMaxVolume(dto.getMaxVolume());
+        vehicle.setMaxDeliveries(dto.getMaxDeliveries());
+        return vehicle;
+    }
 }
