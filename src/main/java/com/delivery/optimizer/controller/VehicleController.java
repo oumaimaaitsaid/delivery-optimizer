@@ -1,10 +1,13 @@
 package com.delivery.optimizer.controller;
 
+import com.delivery.optimizer.dto.VehicleDTO;
+import com.delivery.optimizer.mapper.VehicleMapper;
 import com.delivery.optimizer.model.Vehicle;
 import com.delivery.optimizer.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/vehicles")
@@ -18,35 +21,42 @@ public class VehicleController {
 
     // Récupérer tous les véhicules
     @GetMapping
-    public List<Vehicle> getAll() {
-        return vehicleRepository.findAll();
+    public List<VehicleDTO> getAll() {
+        return vehicleRepository.findAll()
+                .stream()
+                .map(VehicleMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     // Récupérer un véhicule par ID
     @GetMapping("/{id}")
-    public Vehicle getById(@PathVariable Long id) {
-        return vehicleRepository.findById(id)
+    public VehicleDTO getById(@PathVariable Long id) {
+        Vehicle vehicle= vehicleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        return VehicleMapper.toDTO(vehicle);
     }
 
     //  Créer un nouveau véhicule
     @PostMapping
-    public Vehicle create(@RequestBody Vehicle vehicle) {
-        return vehicleRepository.save(vehicle);
+    public VehicleDTO create(@RequestBody VehicleDTO dto) {
+        Vehicle vehicle=VehicleMapper.toEntity(dto);
+        Vehicle saved= vehicleRepository.save(vehicle);
+        return VehicleMapper.toDTO(saved);
     }
 
     // update un véhicule
     @PutMapping("/{id}")
-    public Vehicle update(@PathVariable Long id, @RequestBody Vehicle updatedVehicle) {
+    public VehicleDTO update(@PathVariable Long id, @RequestBody VehicleDTO dto ) {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
-        vehicle.setType(updatedVehicle.getType());
-        vehicle.setMaxWeight(updatedVehicle.getMaxWeight());
-        vehicle.setMaxVolume(updatedVehicle.getMaxVolume());
-        vehicle.setMaxDeliveries(updatedVehicle.getMaxDeliveries());
+        vehicle.setType(dto.getType());
+        vehicle.setMaxWeight(dto.getMaxWeight());
+        vehicle.setMaxVolume(dto.getMaxVolume());
+        vehicle.setMaxDeliveries(dto.getMaxDeliveries());
 
-        return vehicleRepository.save(vehicle);
+        Vehicle updated = vehicleRepository.save(vehicle);
+        return VehicleMapper.toDTO(updated);
     }
 
     //Supprimer un véhicule
