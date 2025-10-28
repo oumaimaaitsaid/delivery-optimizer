@@ -1,4 +1,42 @@
 package com.delivery.optimizer.optimizer;
 
-public class NearestNeighborOptimizer {
+import com.delivery.optimizer.model.Delivery;
+import com.delivery.optimizer.model.Warehouse;
+import com.delivery.optimizer.util.DistanceCalculator;
+
+
+import java.util.*;
+
+public class NearestNeighborOptimizer implements TourOptimizer{
+    private   DistanceCalculator  distanceCalculator;
+    @Override
+    public List<Delivery> calculateOptimalTour(Warehouse warehouse, List<Delivery> deliveries) {
+        List<Delivery> remaining = new ArrayList<>(deliveries);
+        List<Delivery> result= new ArrayList<>();
+
+
+        double currentLat = warehouse.getLatitude();
+        double currentLon = warehouse.getLongitude();
+
+        while (!remaining.isEmpty()) {
+            Delivery nearest=null;
+            double minDistance =Double.MAX_VALUE;
+
+            for(Delivery d : remaining){
+                double distance = distanceCalculator.calculateDistance(currentLat,currentLon,d.getLatitude(),d.getLongitude());
+                if(distance<minDistance){
+
+                    minDistance=distance;
+                    nearest=d;
+                }
+            }
+            result.add(nearest);
+            currentLon=nearest.getLongitude();
+            currentLat=nearest.getLatitude();
+            remaining.remove(nearest);
+        }
+return result;
+
+    }
+
 }
