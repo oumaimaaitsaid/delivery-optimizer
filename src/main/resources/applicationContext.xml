@@ -11,8 +11,8 @@
            http://www.springframework.org/schema/context
            https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Activer les repositories Spring Data via XML (sans annotations) -->
-    <jpa:repositories base-package="com.delivery.optimizer.repository" />
+    <!-- Scanne les composants (controllers, services, repositories) -->
+    <context:component-scan base-package="com.delivery.optimizer"/>
 
     <!-- Source de données H2 en mode fichier -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -34,6 +34,8 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                
             </props>
         </property>
     </bean>
@@ -47,13 +49,12 @@
     <bean id="distanceCalculator" class="com.delivery.optimizer.util.DistanceCalculator"/>
     <bean id="nearestNeighborOptimizer" class="com.delivery.optimizer.optimizer.NearestNeighborOptimizer"/>
     <bean id="clarkeWrightOptimizer" class="com.delivery.optimizer.optimizer.ClarkeWrightOptimizer">
-        <constructor-arg ref="distanceCalculator"/>
-    </bean>
+    <constructor-arg ref="distanceCalculator"/>
+</bean>
 
     <!-- TourService -->
     <bean id="tourService" class="com.delivery.optimizer.service.TourService">
-        <!-- Choix de l'algorithme: basculer entre clarkeWrightOptimizer et nearestNeighborOptimizer -->
-        <constructor-arg index="0" ref="clarkeWrightOptimizer"/>
+        <constructor-arg index="0" ref="nearestNeighborOptimizer"/>
         <constructor-arg index="1" ref="distanceCalculator"/>
     </bean>
 

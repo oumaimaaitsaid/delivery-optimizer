@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import java.sql.Driver;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

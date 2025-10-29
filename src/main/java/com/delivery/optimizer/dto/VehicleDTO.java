@@ -1,6 +1,6 @@
 package com.delivery.optimizer.dto;
 
-import com.delivery.optimizer.model.VehicleType;
+
 
 public class VehicleDTO {
     private Long id;

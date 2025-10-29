@@ -2,7 +2,6 @@ package com.delivery.optimizer.mapper;
 
 import com.delivery.optimizer.dto.DeliveryDTO;
 import com.delivery.optimizer.model.Delivery;
-import com.delivery.optimizer.model.Tour;
 
 public class DeliveryMapper {
 
