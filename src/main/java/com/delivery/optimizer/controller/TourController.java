@@ -98,7 +98,16 @@ public class TourController {
     }
 
     @PostMapping("/compare")
-
+    public Map<String, Object> compare(@RequestBody Map<String, Object> body) {
+        Long warehouseId = body.get("warehouseId") instanceof Number ? ((Number) body.get("warehouseId")).longValue() : null;
+        Long vehicleId = body.get("vehicleId") instanceof Number ? ((Number) body.get("vehicleId")).longValue() : null;
+        @SuppressWarnings("unchecked")
+        List<Number> deliveryIdsNum = (List<Number>) body.get("deliveryIds");
+        if (warehouseId == null || deliveryIdsNum == null || deliveryIdsNum.isEmpty()) {
+            Map<String, Object> err = new HashMap<>();
+            err.put("error", "warehouseId et deliveryIds sont requis");
+            return err;
+        }
 
 
 }
