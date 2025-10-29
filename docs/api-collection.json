@@ -1,0 +1,29 @@
+{
+  "info": {
+    "name": "Delivery Optimizer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "placeholder-id"
+  },
+  "item": [
+    {
+      "name": "Compare Tours",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/tours/compare",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["tours", "compare"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"warehouseId\": 1,\n  \"vehicleId\": 2,\n  \"deliveryIds\": [100,101,102,103]\n}"
+        }
+      }
+    }
+  ]
+}

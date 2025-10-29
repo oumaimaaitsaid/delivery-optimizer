@@ -150,13 +150,11 @@ grep -R "log\." -n src/main/java
 Add screenshots under a docs folder and reference them below. Suggested paths:
 - `docs/screenshots/swagger-ui.png`
 - `docs/screenshots/h2-console.png`
-- `docs/screenshots/compare-request.png`
 - `docs/screenshots/compare-response.png`
 
 Example embeds:
 ![Swagger UI](docs/screenshots/swagger-ui.png)
 ![H2 Console](docs/screenshots/h2-console.png)
-![POST /tours/compare (request)](docs/screenshots/compare-request.png)
 ![POST /tours/compare (response)](docs/screenshots/compare-response.png)
 
 ## What remains / Next steps
