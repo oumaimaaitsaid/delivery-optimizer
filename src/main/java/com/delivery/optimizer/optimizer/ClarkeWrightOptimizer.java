@@ -19,7 +19,10 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
             return deliveries == null ? Collections.emptyList() : new ArrayList<>(deliveries);
         }
 
-
+        Map<Delivery, Double> dw = new HashMap<>();
+        for (Delivery d : deliveries) {
+            dw.put(d, distanceCalculator.calculateDistance(warehouse, d));
+        }
 
 
     }
