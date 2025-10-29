@@ -46,6 +46,23 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
             routeOf.put(d, r);
         }
 
+        for (Saving sv : savings) {
+            LinkedList<Delivery> ri = routeOf.get(sv.i);
+            LinkedList<Delivery> rj = routeOf.get(sv.j);
+            if (ri == null || rj == null || ri == rj) continue;
 
+            Delivery tailI = ri.getLast();
+            Delivery headJ = rj.getFirst();
+            if (!tailI.equals(sv.i) || !headJ.equals(sv.j)) continue;
+
+            ri.addAll(rj);
+            for (Delivery d : rj) routeOf.put(d, ri);
+            routes.remove(rj);
+            if (routes.size() == 1) break;
+        }
+
+        if (routes.isEmpty()) return new ArrayList<>();
+        routes.sort((a, b) -> Integer.compare(b.size(), a.size()));
+        return new ArrayList<>(routes.get(0));
     }
 }
