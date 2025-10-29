@@ -24,6 +24,21 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
             dw.put(d, distanceCalculator.calculateDistance(warehouse, d));
         }
 
+        class Saving { final Delivery i; final Delivery j; final double s; Saving(Delivery i, Delivery j, double s){this.i=i;this.j=j;this.s=s;} }
+
+        List<Saving> savings = new ArrayList<>();
+        for (int a = 0; a < deliveries.size(); a++) {
+            for (int b = a + 1; b < deliveries.size(); b++) {
+                Delivery i = deliveries.get(a);
+                Delivery j = deliveries.get(b);
+                double sij = dw.get(i) + dw.get(j) - distanceCalculator.calculateDistance(i, j);
+                savings.add(new Saving(i, j, sij));
+            }
+        }
+        savings.sort((x, y) -> Double.compare(y.s, x.s));
+
+
+
 
     }
 }
