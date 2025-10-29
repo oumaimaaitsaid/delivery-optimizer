@@ -1,6 +1,7 @@
 package com.delivery.optimizer.service;
 
 import com.delivery.optimizer.model.Delivery;
+import com.delivery.optimizer.model.Vehicle;
 import com.delivery.optimizer.model.Warehouse;
 import com.delivery.optimizer.optimizer.TourOptimizer;
 import com.delivery.optimizer.util.DistanceCalculator;
@@ -18,6 +19,32 @@ public class TourService {
 
     public List<Delivery> getOptimizedTour(Warehouse warehouse,List<Delivery>  deliveries){
         return optimizer.calculateOptimalTour(warehouse,deliveries);
+    }
+
+    public List<Delivery> getOptimizedTour(Warehouse warehouse, Vehicle vehicle, List<Delivery> deliveries){
+        if (deliveries == null || deliveries.isEmpty()) return deliveries;
+        if (vehicle == null) return optimizer.calculateOptimalTour(warehouse, deliveries);
+
+        int count = deliveries.size();
+        if (vehicle.getMaxDeliveries() > 0 && count > vehicle.getMaxDeliveries()) {
+            throw new IllegalArgumentException("Nombre de livraisons dépasse la capacité du véhicule");
+        }
+
+        double totalWeight = 0.0;
+        double totalVolume = 0.0;
+        for (Delivery d : deliveries) {
+            totalWeight += d.getWeight();
+            totalVolume += d.getVolume();
+        }
+
+        if (vehicle.getMaxWeight() > 0 && totalWeight > vehicle.getMaxWeight()) {
+            throw new IllegalArgumentException("Poids total dépasse la capacité du véhicule");
+        }
+        if (vehicle.getMaxVolume() > 0 && totalVolume > vehicle.getMaxVolume()) {
+            throw new IllegalArgumentException("Volume total dépasse la capacité du véhicule");
+        }
+
+        return optimizer.calculateOptimalTour(warehouse, deliveries);
     }
 
     public double getTotalDistance(Warehouse warehouse,List<Delivery> orderedDeliveries){
