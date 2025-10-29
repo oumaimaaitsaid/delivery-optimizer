@@ -3,14 +3,25 @@ package com.delivery.optimizer.controller;
 import com.delivery.optimizer.dto.TourDTO;
 import com.delivery.optimizer.mapper.TourMapper;
 import com.delivery.optimizer.model.Tour;
+import com.delivery.optimizer.model.Delivery;
+import com.delivery.optimizer.model.Vehicle;
+import com.delivery.optimizer.model.Warehouse;
+import com.delivery.optimizer.optimizer.ClarkeWrightOptimizer;
+import com.delivery.optimizer.optimizer.TourOptimizer;
+import com.delivery.optimizer.repository.DeliveryRepository;
 import com.delivery.optimizer.repository.TourRepository;
 import com.delivery.optimizer.repository.VehicleRepository;
 import com.delivery.optimizer.repository.WarehouseRepository;
 import com.delivery.optimizer.service.TourService;
+import com.delivery.optimizer.util.DistanceCalculator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tours")
@@ -19,15 +30,18 @@ public class TourController {
     private final TourRepository tourRepository;
     private final VehicleRepository vehicleRepository;
     private final WarehouseRepository warehouseRepository;
+    private final DeliveryRepository deliveryRepository;
     private final TourService tourService;
 
     public TourController(TourRepository tourRepository,
                           VehicleRepository vehicleRepository,
                           WarehouseRepository warehouseRepository,
+                          DeliveryRepository deliveryRepository,
                           TourService tourService) {
         this.tourRepository = tourRepository;
         this.vehicleRepository = vehicleRepository;
         this.warehouseRepository = warehouseRepository;
+        this.deliveryRepository = deliveryRepository;
         this.tourService = tourService;
     }
 
@@ -82,4 +96,9 @@ public class TourController {
     public void delete(@PathVariable Long id) {
         tourRepository.deleteById(id);
     }
+
+    @PostMapping("/compare")
+
+
+
 }
