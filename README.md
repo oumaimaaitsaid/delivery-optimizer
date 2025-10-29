@@ -154,8 +154,10 @@ Add screenshots under a docs folder and reference them below. Suggested paths:
 
 Example embeds:
 ![Swagger UI](docs/screenshots/swagger-ui.png)
-![H2 Console](docs/screenshots/h2-console.png)
-![POST /tours/compare (response)](docs/screenshots/compare-response.png)
+![H2 Console](<img width="655" height="491" alt="image" src="https://github.com/user-attachments/assets/34ccf0e3-5927-44b1-ab21-16daae292a53" />
+)
+![POST /tours/compare (response)](<img width="815" height="937" alt="image" src="https://github.com/user-attachments/assets/100705cd-249e-4620-a795-36f7f51f3144" />
+)
 
 ## What remains / Next steps
 - Ensure your IDE uses JDK 8+ (or 17) and Maven compiles with that version.
