@@ -18,7 +18,11 @@ public class VehicleMapper {
     public static Vehicle toEntity(VehicleDTO dto) {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(dto.getId());
-        vehicle.setType(VehicleType.valueOf(dto.getType().toString()));
+        if (dto.getType() != null) {
+            vehicle.setType(VehicleType.valueOf(dto.getType().toUpperCase()));
+        } else {
+            vehicle.setType(null);
+        }
         vehicle.setMaxWeight(dto.getMaxWeight());
         vehicle.setMaxVolume(dto.getMaxVolume());
         vehicle.setMaxDeliveries(dto.getMaxDeliveries());
