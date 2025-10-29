@@ -1,0 +1,17 @@
+# Diagnostic de la base de données
+Horodatage: 2025-10-29T01:41:25.060
+
+Etat des tables
+- Entrepôts (Warehouse): 0
+- Véhicules (Vehicle): 0
+- Livraisons (Delivery): 0
+- Tournées (Tour): 0
+
+Problèmes détectés
+- La base de données est vide.
+
+Solutions proposées
+- Créer au moins un entrepôt (Warehouse) initial.
+- Ajouter des véhicules (Vehicle) avec capacité.
+- Importer ou créer des livraisons (Delivery).
+- Générer des tournées (Tour) via l'optimiseur après avoir saisi des données.

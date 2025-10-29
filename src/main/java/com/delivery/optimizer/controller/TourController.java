@@ -9,46 +9,45 @@ import com.delivery.optimizer.repository.WarehouseRepository;
 import com.delivery.optimizer.service.TourService;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@RestController
 @RequestMapping("/tours")
-
 public class TourController {
 
     private final TourRepository tourRepository;
     private final VehicleRepository vehicleRepository;
     private final WarehouseRepository warehouseRepository;
     private final TourService tourService;
-    public TourController(TourRepository tourRepository,VehicleRepository vehicleRepository,
-                          WarehouseRepository warehouseRepository, TourService tourService) {
+
+    public TourController(TourRepository tourRepository,
+                          VehicleRepository vehicleRepository,
+                          WarehouseRepository warehouseRepository,
+                          TourService tourService) {
         this.tourRepository = tourRepository;
         this.vehicleRepository = vehicleRepository;
         this.warehouseRepository = warehouseRepository;
         this.tourService = tourService;
     }
-    //Récupérer toutes les tournés
+
     @GetMapping
-    public List<TourDTO> getTours(){
+    public List<TourDTO> getTours() {
         return tourRepository.findAll()
                 .stream()
                 .map(TourMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    //Récuperer une tournée by Id
-
     @GetMapping("/{id}")
-    public TourDTO getTourById(@PathVariable Long id){
-        Tour tour= tourRepository.findById(id).orElseThrow(()->new RuntimeException("Tour not found"));
+    public TourDTO getTourById(@PathVariable Long id) {
+        Tour tour = tourRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tour not found"));
         return TourMapper.toDTO(tour);
     }
 
-    //crée une nouvelle tourné
     @PostMapping
-    public TourDTO createTour(@RequestBody TourDTO dto){
+    public TourDTO createTour(@RequestBody TourDTO dto) {
         Tour tour = TourMapper.toEntity(dto);
         if (dto.getVehicleId() != null) {
             tour.setVehicle(vehicleRepository.findById(dto.getVehicleId())
@@ -58,33 +57,27 @@ public class TourController {
             tour.setWarehouse(warehouseRepository.findById(dto.getWarehouseId())
                     .orElseThrow(() -> new RuntimeException("Warehouse not found")));
         }
-
         Tour saved = tourRepository.save(tour);
         return TourMapper.toDTO(saved);
     }
 
-
-    // Mettre à jour une tournée
     @PutMapping("/{id}")
     public TourDTO update(@PathVariable Long id, @RequestBody TourDTO dto) {
         Tour tour = tourRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tour not found"));
-
         tour.setDate(dto.getDate());
-        if(dto.getDeliveryIds() != null){
+        if (dto.getDeliveryIds() != null) {
             tour.setVehicle(vehicleRepository.findById(dto.getVehicleId())
                     .orElseThrow(() -> new RuntimeException("Vehicle not found")));
         }
-        if(dto.getWarehouseId() != null){
+        if (dto.getWarehouseId() != null) {
             tour.setWarehouse(warehouseRepository.findById(dto.getWarehouseId())
                     .orElseThrow(() -> new RuntimeException("Warehouse not found")));
         }
-
-Tour updated= tourRepository.save(tour);
+        Tour updated = tourRepository.save(tour);
         return TourMapper.toDTO(updated);
     }
 
-    //DELETE — Supprimer une tournée
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         tourRepository.deleteById(id);

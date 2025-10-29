@@ -18,13 +18,13 @@ public class DistanceCalculator {
     }
 
 
-    // ✅ 2. Distance entre entrepôt et livraison
+    //  2. Distance entre entrepôt et livraison
     public double calculateDistance(Warehouse w, Delivery d) {
         return calculateDistance(w.getLatitude(), w.getLongitude(),
                 d.getLatitude(), d.getLongitude());
     }
 
-    // ✅ 3. Distance entre deux livraisons
+    // 3. Distance entre deux livraisons
     public double calculateDistance(Delivery d1, Delivery d2) {
         return calculateDistance(d1.getLatitude(), d1.getLongitude(),
                 d2.getLatitude(), d2.getLongitude());
