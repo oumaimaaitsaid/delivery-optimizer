@@ -47,6 +47,9 @@
     <!-- Beans utilitaires -->
     <bean id="distanceCalculator" class="com.delivery.optimizer.util.DistanceCalculator"/>
     <bean id="nearestNeighborOptimizer" class="com.delivery.optimizer.optimizer.NearestNeighborOptimizer"/>
+    <bean id="clarkeWrightOptimizer" class="com.delivery.optimizer.optimizer.ClarkeWrightOptimizer">
+    <constructor-arg ref="distanceCalculator"/>
+</bean>
 
     <!-- TourService -->
     <bean id="tourService" class="com.delivery.optimizer.service.TourService">
