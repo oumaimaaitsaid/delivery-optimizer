@@ -37,7 +37,14 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
         }
         savings.sort((x, y) -> Double.compare(y.s, x.s));
 
-
+        List<LinkedList<Delivery>> routes = new ArrayList<>();
+        Map<Delivery, LinkedList<Delivery>> routeOf = new HashMap<>();
+        for (Delivery d : deliveries) {
+            LinkedList<Delivery> r = new LinkedList<>();
+            r.add(d);
+            routes.add(r);
+            routeOf.put(d, r);
+        }
 
 
     }
