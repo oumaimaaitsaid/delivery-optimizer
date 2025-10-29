@@ -4,6 +4,8 @@ import com.delivery.optimizer.model.Delivery;
 import com.delivery.optimizer.model.Warehouse;
 import com.delivery.optimizer.optimizer.TourOptimizer;
 import com.delivery.optimizer.util.DistanceCalculator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public class TourService {
     private final TourOptimizer optimizer;
    private  final DistanceCalculator  distanceCalculator;
+    private static final Logger log = LoggerFactory.getLogger(TourService.class);
     public TourService(TourOptimizer optimizer,DistanceCalculator distanceCalculator) {
         this.optimizer =optimizer;
         this.distanceCalculator = distanceCalculator;
@@ -33,6 +36,7 @@ public class TourService {
         }
 
         totalDistance += distanceCalculator.calculateDistance(currentLat, currentLon, warehouse.getLatitude(), warehouse.getLongitude());
+        log.info("[DIST] routeSize={}, totalDistance={}", orderedDeliveries.size(), totalDistance);
         return   totalDistance;
     }
 }

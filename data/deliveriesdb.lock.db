@@ -1,6 +1,6 @@
 #FileLock
-#Wed Oct 29 20:50:42 WEST 2025
+#Wed Oct 29 20:59:28 WEST 2025
 hostName=ycode
-id=19a3185c5cd9a8ecaf560e76faa0160b1cf3b485908
+id=19a318dcff928ccecd19178064d2a67e543296b6454
 method=file
-server=192.168.0.204\:60336
+server=192.168.0.204\:54700
