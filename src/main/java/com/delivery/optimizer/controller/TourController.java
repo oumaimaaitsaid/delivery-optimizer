@@ -157,5 +157,26 @@ public class TourController {
         return res;
     }
 
-
+    private List<Delivery> nearestNeighbor(Warehouse warehouse, List<Delivery> deliveries, DistanceCalculator dc) {
+        List<Delivery> remaining = new ArrayList<>(deliveries);
+        List<Delivery> route = new ArrayList<>();
+        double curLat = warehouse.getLatitude();
+        double curLon = warehouse.getLongitude();
+        while (!remaining.isEmpty()) {
+            Delivery best = null;
+            double bestDist = Double.MAX_VALUE;
+            for (Delivery d : remaining) {
+                double dist = dc.calculateDistance(curLat, curLon, d.getLatitude(), d.getLongitude());
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    best = d;
+                }
+            }
+            route.add(best);
+            curLat = best.getLatitude();
+            curLon = best.getLongitude();
+            remaining.remove(best);
+        }
+        return route;
+    }
 }
