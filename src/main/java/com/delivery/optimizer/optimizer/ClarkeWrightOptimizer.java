@@ -13,5 +13,14 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
         this.distanceCalculator = distanceCalculator;
     }
 
+    @Override
+    public List<Delivery> calculateOptimalTour(Warehouse warehouse, List<Delivery> deliveries) {
+        if (deliveries == null || deliveries.size() <= 1) {
+            return deliveries == null ? Collections.emptyList() : new ArrayList<>(deliveries);
+        }
 
+
+
+
+    }
 }
